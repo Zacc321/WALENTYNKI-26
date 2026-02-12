@@ -5,54 +5,45 @@ interface LoadingLoveProps {
   onComplete: () => void;
 }
 
-const VISUAL_MAX = 100;
-const FINAL_MAX = 99999;
-
 export function LoadingLove({ onComplete }: LoadingLoveProps) {
-  const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<'filling' | 'counting'>('filling');
-  const hasFired = useRef(false);
+  const [displayPercent, setDisplayPercent] = useState(0);
+  const [barWidth, setBarWidth] = useState(0);
+  const done = useRef(false);
 
   useEffect(() => {
-    if (phase === 'filling') {
-      const timer = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= VISUAL_MAX) {
-            clearInterval(timer);
-            setPhase('counting');
-            return VISUAL_MAX;
-          }
-          const increment = Math.random() * 3 + 1;
-          return Math.min(Math.round(prev + increment), VISUAL_MAX);
-        });
-      }, 100);
-      return () => clearInterval(timer);
-    }
+    let current = 0;
+    let phase: 'bar' | 'fast' | 'done' = 'bar';
 
-    if (phase === 'counting') {
-      const timer = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= FINAL_MAX) {
-            clearInterval(timer);
-            return FINAL_MAX;
-          }
-          // Very fast counting
-          const increment = Math.floor(Math.random() * 800 + 200);
-          return Math.min(prev + increment, FINAL_MAX);
-        });
-      }, 30);
-      return () => clearInterval(timer);
-    }
-  }, [phase]);
+    const timer = setInterval(() => {
+      if (phase === 'bar') {
+        // Phase 1: fill bar from 0 to 100
+        current += Math.random() * 3 + 1;
+        if (current >= 100) {
+          current = 100;
+          phase = 'fast';
+        }
+        setDisplayPercent(Math.round(current));
+        setBarWidth(Math.min(current, 100));
+      } else if (phase === 'fast') {
+        // Phase 2: number keeps going up very fast, bar stays full
+        current += Math.random() * 2000 + 500;
+        if (current >= 99999) {
+          current = 99999;
+          phase = 'done';
+        }
+        setDisplayPercent(Math.round(current));
+        setBarWidth(100);
+      } else if (phase === 'done') {
+        clearInterval(timer);
+        if (!done.current) {
+          done.current = true;
+          setTimeout(() => onComplete(), 1200);
+        }
+      }
+    }, phase === 'bar' ? 100 : 30);
 
-  useEffect(() => {
-    if (progress >= FINAL_MAX && !hasFired.current) {
-      hasFired.current = true;
-      setTimeout(onComplete, 1200);
-    }
-  }, [progress, onComplete]);
-
-  const barWidth = Math.min((progress / VISUAL_MAX) * 100, 100);
+    return () => clearInterval(timer);
+  }, [onComplete]);
 
   return (
     <div className="flex flex-col items-center justify-center p-8 bg-white/80 rounded-2xl shadow-xl backdrop-blur-sm max-w-md w-full text-center">
@@ -77,17 +68,17 @@ export function LoadingLove({ onComplete }: LoadingLoveProps) {
         >
           {barWidth > 15 && (
             <span className="text-white font-extrabold text-lg drop-shadow">
-              {progress}%
+              {displayPercent >= 99999 ? '∞' : displayPercent}%
             </span>
           )}
         </motion.div>
       </div>
 
       {barWidth <= 15 && (
-        <p className="text-xl font-bold text-pink-600">{progress}%</p>
+        <p className="text-xl font-bold text-pink-600">{displayPercent}%</p>
       )}
 
-      {progress >= FINAL_MAX && (
+      {displayPercent >= 99999 && (
         <motion.p
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}

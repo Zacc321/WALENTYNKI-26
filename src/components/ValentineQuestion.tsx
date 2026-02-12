@@ -38,18 +38,20 @@ export function ValentineQuestion() {
           Kocham Cię najbardziej na świecie Oluś!
         </p>
 
-        {/* Hearts scattered around */}
+        {/* Pulsating hearts row */}
         <div className="flex flex-wrap justify-center gap-2 mb-4 text-3xl">
           <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }}>❤️</motion.span>
-          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.15 }}>💗</motion.span>
-          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.3 }}>💖</motion.span>
-          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.45 }}>💝</motion.span>
-          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.6 }}>💕</motion.span>
-          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.75 }}>💓</motion.span>
-          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.9 }}>💞</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.1 }}>💗</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}>💖</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.3 }}>💝</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}>💕</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.5 }}>💓</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.6 }}>💞</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.7 }}>❤️</motion.span>
+          <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.8 }}>💘</motion.span>
         </div>
 
-        {/* Bouncing emojis from the main text */}
+        {/* Bouncing emojis under text */}
         <div className="flex gap-4 text-5xl">
           <motion.span animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }}>❣️</motion.span>
           <motion.span animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.15 }}>😘</motion.span>
@@ -83,7 +85,7 @@ export function ValentineQuestion() {
           onMouseEnter={moveNoButton}
           onTouchStart={moveNoButton}
           onClick={moveNoButton}
-          className="px-8 py-4 bg-red-500 text-white font-bold rounded-full shadow-lg text-lg cursor-pointer z-10 fixed-size"
+          className="px-8 py-4 bg-red-500 text-white font-bold rounded-full shadow-lg text-lg cursor-pointer z-10"
           style={{ position: 'relative' }}
         >
           NIE 😢
